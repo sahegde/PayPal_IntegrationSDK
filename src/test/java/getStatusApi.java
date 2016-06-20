@@ -1,3 +1,4 @@
+package test.java;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
@@ -13,11 +14,8 @@ import com.paypal.base.rest.PayPalResource;
 
 public class getStatusApi extends PayPalResource{
 	
-	public String create(String accessToken) throws PayPalRESTException, MalformedURLException, UnsupportedEncodingException {
-		APIContext apiContext = new APIContext(accessToken);
-		return create(apiContext);
-	}
-	
+	private static final long serialVersionUID = 1L;
+
 	public String create(APIContext apiContext) throws PayPalRESTException, MalformedURLException, UnsupportedEncodingException {
 		if (apiContext == null) {
 			throw new IllegalArgumentException("APIContext cannot be null");
@@ -44,7 +42,12 @@ public class getStatusApi extends PayPalResource{
 		String clientID = "Af1bGDNgFBtbJvzEkG25zt4SoNQQ3ustiLm84GWXxe8nq_HE_0wCQ9SH8M1ScmSBURBIzPiCjr5gu-Dq";
 		String clientSecret = "EINHxUKd6GNoQl8tDd2PJrnH932nefTgm8L8QQM8SeXo2jEhsIapdt3AjlMdPz5tax9_wMjjbauvy3wY";
 		String accessToken = new OAuthTokenCredential(clientID, clientSecret, map).getAccessToken();
-		String getStatusResponse = obj.create(accessToken);
-		System.out.println("getStatusResponse: "+getStatusResponse);
+		
+		APIContext context = new APIContext(accessToken);
+		context.setConfigurationMap(map);
+		
+		String getStatusResponse = obj.create(context);
+		
+		System.out.println("getStatusResponse: " + getStatusResponse);
 	}
 }
